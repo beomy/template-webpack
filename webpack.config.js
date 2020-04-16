@@ -7,13 +7,13 @@ const prod = mode === 'production';
 
 module.exports = {
 	entry: {
-		bundle: ['./src/main.js']
+		bundle: ['./src/main.ts']
 	},
 	resolve: {
 		alias: {
 			svelte: path.resolve('node_modules', 'svelte')
 		},
-		extensions: ['.mjs', '.js', '.svelte'],
+		extensions: ['.mjs', '.js', '.svelte', '.tsx', '.ts'],
 		mainFields: ['svelte', 'browser', 'module', 'main']
 	},
 	output: {
@@ -41,7 +41,12 @@ module.exports = {
 					'css-loader',
 					'sass-loader'
 				]
-			}
+			},
+			{
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
 		]
 	},
 	mode,
