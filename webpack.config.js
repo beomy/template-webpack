@@ -11,7 +11,8 @@ module.exports = {
 	},
 	resolve: {
 		alias: {
-			svelte: path.resolve('node_modules', 'svelte')
+			svelte: path.resolve('node_modules', 'svelte'),
+			'@': path.resolve(__dirname, 'src')
 		},
 		extensions: ['.mjs', '.js', '.svelte', '.tsx', '.ts'],
 		mainFields: ['svelte', 'browser', 'module', 'main']
@@ -27,14 +28,7 @@ module.exports = {
 				test: /\.svelte$/,
 				use: {
 					loader: 'svelte-loader',
-					options: {
-						preprocess: sveltePreprocess({
-							sourceMap: !prod
-						}),
-						// ...other svelte options
-						emitCss: true,
-						hotReload: true,					
-					}
+					options: require('./svelte.config')
 				}
 			},
 			{
@@ -46,7 +40,8 @@ module.exports = {
 					 * */
 					prod ? MiniCssExtractPlugin.loader : 'style-loader',
 					'css-loader',
-					'sass-loader'
+					'sass-loader',
+					'postcss-loader'
 				]
 			},
 			{
